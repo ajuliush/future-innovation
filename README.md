@@ -13,13 +13,13 @@
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/ajuliush/laravel-crud-firebase.git
+    git clone (https://github.com/ajuliush/future-innovation.git)
     ```
 
 2. **Navigate to the project directory:**
 
     ```bash
-    cd laravel-crud-firebase/
+    cd future-innovation/
     ```
 
 3. **Install PHP dependencies using Composer:**
