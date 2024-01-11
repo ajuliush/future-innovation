@@ -13,7 +13,7 @@ class FileController extends Controller
     public function index()
     {
         $files = File::get();
-       return view('welcome',get_defined_vars());
+       return view('demo',get_defined_vars());
     }
 
     /**
