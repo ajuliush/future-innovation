@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
+// Route::get('/demo', function () {
+//     return view('demo');
 // });
 
-Route::resource('', FileController::class);
+Route::resource('/', FileController::class);
 Route::post('/file-by-id', [FileController::class,'FileById'])->name('file-by-id');

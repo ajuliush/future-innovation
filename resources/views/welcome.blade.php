@@ -847,8 +847,8 @@
                             <label for=""
                                 class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Upload File</label>
                             <br>
-                            <input type="file" name="files[]" multiple accept=".doc,.docx,.pdf,.xls,.xlsx"
-                                >
+                            <input type="file" name="files[]" multiple accept=".docx,.pdf,.xlsx">
+                            <div id="result1"></div>
                             <button type="submit"
                                 class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Upload</button>
                         </form>
@@ -856,7 +856,7 @@
                 </div>
                 <div id="yourDivId">
                 </div>
-                <div  class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed" id="result1">
+                <div class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed" id="result1">
                 </div>
             </div>
             <div class="mt-2 flex justify-center">
@@ -913,42 +913,46 @@
                         var pdfUrl = res.path; // Assuming res.path is the URL of the PDF file
                         // Extract the file extension from the URL
                         var fileExtension = pdfUrl.split('.').pop().toLowerCase();
-                        // Log the file extension to the console
-                        console.log("File Extension: " + fileExtension);
-                        if (fileExtension == 'pdf') {
+                        if (fileExtension === 'pdf') {
+                            // For PDF files, create an embed tag and display it
+                            var pdfUrl = res.path;
                             var embedTag = '<embed src="' + pdfUrl +
                                 '" width="100%" height="600px" />';
                             $('#yourDivId').html(embedTag);
+                        } else if (fileExtension === 'docx' || fileExtension === 'doc') {
+                            var docx = res.filename;
+                            console.log(docx);
+                            previewUploadedDocx(docx);
                         } else {
-                            parseWordDocxFile(pdfUrl);
+                            // For other file types, you can handle them similarly or customize as needed
+                            console.log("Unsupported file type: " + fileExtension);
                         }
                     }
                 });
             });
         });
+        function previewUploadedDocx(docx) {
+            // Replace 'your-docx-file-url' with the actual URL of your uploaded DOCX file
+            var docxFileUrl = '{{ asset("uploads") }}/'+ docx;
 
-        function parseWordDocxFile(pdfUrl) {
-            console.log(pdfUrl);
-            var files = pdfUrl.files || [];
-            console.log(files);
-            if (!files.length) return;
-            var file = files[0];
-
-            console.time();
-            var reader = new FileReader();
-            reader.onloadend = function(event) {
-                var arrayBuffer = reader.result;
-                // debugger
-
-                mammoth.convertToHtml({
-                    arrayBuffer: arrayBuffer
-                }).then(function(resultObject) {
-                    result1.innerHTML = resultObject.value
-                    console.log(resultObject.value)
+            // Fetch the DOCX file from the server
+            fetch(docxFileUrl)
+                .then(response => response.arrayBuffer())
+                .then(arrayBuffer => {
+                    // Process the arrayBuffer using mammoth
+                    return mammoth.convertToHtml({
+                        arrayBuffer: arrayBuffer
+                    });
                 })
-                console.timeEnd();
-            };
-            reader.readAsArrayBuffer(file);
+                .then(resultObject => {
+                    // Display the result in the specified div
+                    var resultElement = document.getElementById("result1");
+                    resultElement.innerHTML = resultObject.value;
+                    console.log(resultObject.value);
+                })
+                .catch(error => {
+                    console.error("Error fetching or converting DOCX:", error);
+                });
         }
     </script>
 
