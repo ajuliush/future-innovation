@@ -9,59 +9,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
     <title>FI!!</title>
-    <style>
-        #files-area {
-            width: 30%;
-            margin: 0 auto;
-        }
-
-        .file-block {
-            border-radius: 10px;
-            background-color: rgba(144, 163, 203, 0.2);
-            margin: 5px;
-            color: initial;
-            display: inline-flex;
-
-            &>span.name {
-                padding-right: 10px;
-                width: max-content;
-                display: inline-flex;
-            }
-        }
-
-        .file-delete {
-            display: flex;
-            width: 24px;
-            color: initial;
-            background-color: #6eb4ff00;
-            font-size: large;
-            justify-content: center;
-            margin-right: 3px;
-            cursor: pointer;
-
-            &:hover {
-                background-color: rgba(144, 163, 203, 0.2);
-                border-radius: 10px;
-            }
-
-            &>span {
-                transform: rotate(45deg);
-            }
-        }
-
-        #docx, #excel{
-            max-height: 500px;
-            /* Set a maximum height for scrolling */
-            overflow-y: auto;
-            /* Enable vertical scrolling if content exceeds the maximum height */
-            /* border: 1px solid #ccc; */
-            /* Add a border for visual appeal */
-            padding: 10px;
-            /* Add some padding for better appearance */
-        }
-    </style>
 </head>
 
 <body>
@@ -111,7 +60,7 @@
                                     class="py-2 px-4 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold border-b">
                                     <a href="javascript:void(0)" class="btn btn-info show" data-toggle="tooltip"
                                         title="{{ $item->filename }}" data-id="{{ $item->id }}">
-                                        Show</a>
+                                        {{pathinfo($item->filename, PATHINFO_EXTENSION);  }}</a>
                                 </th>
                             @endforeach
                         </tr>
